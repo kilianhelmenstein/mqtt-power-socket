@@ -1,0 +1,19 @@
+{
+  "name": "mqtt-power-socket",
+  "version": "1.0.0",
+  "description": "Switch your power sockets over MQTT.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kilianhelmenstein/mqtt-power-socket.git"
+  },
+  "author": "Kilian Helmenstein",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kilianhelmenstein/mqtt-power-socket/issues"
+  },
+  "homepage": "https://github.com/kilianhelmenstein/mqtt-power-socket#readme"
+}
