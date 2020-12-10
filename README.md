@@ -1,2 +1,2 @@
 # mqtt-power-socket
-Switch your power sockets over MQTT
+Switch your power sockets over MQTT.
