@@ -1,10 +1,10 @@
-#include "../rc-switch/RCSwitch.h"
+#include "./rc-switch/RCSwitch.h"
 
 #include <stdlib.h>
 #include <stdio.h>
 
 namespace {
-   GPIO_17 = 0;   // see wiringPi
+   int GPIO_17 = 0;   // see wiringPi
 }
  
 int main(int argc, char *argv[]) {
