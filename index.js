@@ -17,4 +17,4 @@ function execute(fileName, params, path) {
     return promise;
 }
 
-execute('./switch/send-code', '5588305', '.');
+execute('./switch/send-code', ['5588305'], '.');
