@@ -1,0 +1,22 @@
+[
+   {
+      "channel": "/wohnung/wohnzimmer/tvbank",
+      "codeOn": 5588305,
+      "codeOff": 5588308
+   },
+   {
+      "channel": "/wohnung/wohnzimmer/tvbank",
+      "codeOn": 5591377,
+      "codeOff": 5591380
+   },
+   {
+      "channel": "/wohnung/wohnzimmer/tvbank",
+      "codeOn": 5592145,
+      "codeOff": 5592148
+   },
+   {
+      "channel": "/wohnung/wohnzimmer/none",
+      "codeOn": 5592337,
+      "codeOff": 5592415
+   }
+]
