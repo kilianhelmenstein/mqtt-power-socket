@@ -1,9 +1,0 @@
-{
-   "switches": [
-      {
-         "topic": "/some/topic",
-         "codeOn": 1,
-         "codeOff": 2
-      }
-   ]
-}
