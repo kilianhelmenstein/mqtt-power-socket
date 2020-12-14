@@ -11,7 +11,7 @@ interface Switch {
 }
 
 interface SwitchCommand {
-   command: 'on' | 'off';
+   status: 'on' | 'off';
 }
 
 async function app() {
@@ -24,10 +24,11 @@ async function app() {
       switches.forEach(async (oneSwitch: Switch) => {
          mqttClient.subscribe(oneSwitch.topic);
 
-         mqttClient.on('message', async function(topic: string, message: SwitchCommand) {
+         mqttClient.on('message', async function(topic: string, message: Buffer) {
             if (topic === oneSwitch.topic) {
                console.log(`Received on ${topic}: ${message}`);
-               const code = message.command === 'on' ? oneSwitch.codeOn : oneSwitch.codeOff;
+               const command = JSON.parse(message.toString()) as SwitchCommand;
+               const code = command.status === 'on' ? oneSwitch.codeOn : oneSwitch.codeOff;
                console.log(`Switching code ${code}`);
                await sendCode(code);
             }
