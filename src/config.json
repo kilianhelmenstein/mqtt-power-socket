@@ -1,0 +1,4 @@
+{
+   "mqttServer": "mqtt://192.168.178.83:1883",
+   "mqttClientId": "mqtt-power-socker"
+}

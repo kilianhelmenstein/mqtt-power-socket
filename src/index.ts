@@ -1,9 +1,41 @@
-import sendCode from './send-code';
-import * as switches from './switches.json';
+import * as config from './config.json'
+import * as switchesConfig from './switches.json';
 
+import sendCode from './send-code';
 import MQTT from "async-mqtt";
 
-async function app() {
-   const mqttClient = await MQTT.connectAsync("tcp://raspberryby:1883");
-   mqttClient.publish
+interface Switch {
+   topic: string;
+   codeOn: number;
+   codeOff: number;
 }
+
+interface SwitchCommand {
+   command: 'on' | 'off';
+}
+
+async function app() {
+   try {
+      console.log(`Try connecting to ${config.mqttServer}...`);
+      const mqttClient = await MQTT.connectAsync(config.mqttServer, { clientId:"mqttjs01", protocolId: 'MQIsdp', protocolVersion: 3, connectTimeout:1000 });
+      console.log(`Connected to ${config.mqttServer}`);
+
+      const switches: Switch[] = switchesConfig.switches;
+      switches.forEach(async (oneSwitch: Switch) => {
+         mqttClient.subscribe(oneSwitch.topic);
+
+         mqttClient.on('message', async function(topic: string, message: SwitchCommand) {
+            if (topic === oneSwitch.topic) {
+               console.log(`Received on ${topic}: ${message}`);
+               const code = message.command === 'on' ? oneSwitch.codeOn : oneSwitch.codeOff;
+               console.log(`Switching code ${code}`);
+               await sendCode(code);
+            }
+         });
+      });
+   } catch (e) {
+      console.log(`Connection error for ${config.mqttServer}: ${e}`);
+   }
+}
+
+app();
