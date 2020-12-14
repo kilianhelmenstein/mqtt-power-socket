@@ -17,7 +17,7 @@ interface SwitchCommand {
 async function app() {
    try {
       console.log(`Try connecting to ${config.mqttServer}...`);
-      const mqttClient = await MQTT.connectAsync(config.mqttServer, { clientId:"mqttjs01", protocolId: 'MQIsdp', protocolVersion: 3, connectTimeout:1000 });
+      const mqttClient = await MQTT.connectAsync(config.mqttServer, { clientId:config.mqttClientId, protocolId: 'MQIsdp', protocolVersion: 3, connectTimeout:1000 });
       console.log(`Connected to ${config.mqttServer}`);
 
       const switches: Switch[] = switchesConfig.switches;

@@ -1,0 +1,4 @@
+{
+   "mqttServer": "",
+   "mqttClientId": "mqtt-power-socket"
+}
