@@ -2,8 +2,8 @@
    "switches": [
       {
          "topic": "/some/topic",
-         "codeOn": 1,
-         "codeOff": 2
+         "switchGroup": "00001",
+         "switchUnit": "00001"
       }
    ]
 }
