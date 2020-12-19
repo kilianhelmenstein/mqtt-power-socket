@@ -6,22 +6,27 @@
 namespace {
    const int GPIO_17 = 0;   // see wiringPi
 }
- 
+
 int main(int argc, char *argv[]) {
-    const auto repetitions = 3;
+    const auto repetitions = 2;
     const auto PIN = GPIO_17;
 
     const auto hasSetupFailed = wiringPiSetup() == -1;
     if (hasSetupFailed)
         return 1;
- 
-    const auto rcSwitch = RCSwitch();
+
+    auto rcSwitch = RCSwitch();
     rcSwitch.enableTransmit(PIN);
- 
-    const auto code = atoi(argv[1]);
-    const auto codeLength = 24;
-    for (const auto r = 0; r < repetitions; r++) {
-        rcSwitch.send(code, codeLength);
+
+    const auto group = argv[1];
+    const auto unit = argv[2];
+    const auto shallTurnOn = atoi(argv[3]) == 1;
+    for (auto r = 0; r < repetitions; r++) {
+        if (shallTurnOn)
+            rcSwitch.switchOn(group, unit);
+        else 
+            rcSwitch.switchOff(group, unit);
     }
+
     return 0;
 }
