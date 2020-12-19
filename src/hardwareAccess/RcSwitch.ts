@@ -2,19 +2,19 @@ import { execFile } from 'child_process'
 import { ISwitch } from '../domain/ISwitch'
 
 export class RcSwitch implements ISwitch {
-   constructor(private codeForOn: number, private codeForOff: number) {}
+   constructor(private group: string, private unit: string) {}
 
    async turnOn(): Promise<void> {
-      await sendRfCode(this.codeForOn);
+      await sendRfCode(this.group, this.unit, 1);
    }
 
    async turnOff(): Promise<void> {
-      await sendRfCode(this.codeForOff);
+      await sendRfCode(this.group, this.unit, 0);
    }
 }
 
-function sendRfCode(code: number): Promise<void> {
-   return executeFileAsync('./switch/send-code', [code.toString()], '.');
+function sendRfCode(group: string, unit: string, status: number): Promise<void> {
+   return executeFileAsync('./switch/send-code', [group, unit, status.toString()], '.');
 }
 
 function executeFileAsync(fileName: string, params: string[], path: string): Promise<void> {
