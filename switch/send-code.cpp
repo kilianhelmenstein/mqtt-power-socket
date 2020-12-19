@@ -4,19 +4,24 @@
 #include <stdio.h>
 
 namespace {
-   int GPIO_17 = 0;   // see wiringPi
+   const int GPIO_17 = 0;   // see wiringPi
 }
  
 int main(int argc, char *argv[]) {
-    int PIN = GPIO_17;
+    const auto repetitions = 3;
+    const auto PIN = GPIO_17;
 
-    if (wiringPiSetup() == -1) return 1;
+    const auto hasSetupFailed = wiringPiSetup() == -1;
+    if (hasSetupFailed)
+        return 1;
  
-    RCSwitch mySwitch = RCSwitch();
-    mySwitch.enableTransmit(PIN);
+    const auto rcSwitch = RCSwitch();
+    rcSwitch.enableTransmit(PIN);
  
     const auto code = atoi(argv[1]);
-    mySwitch.send(code, 24);
-
+    const auto codeLength = 24;
+    for (const auto r = 0; r < repetitions; r++) {
+        rcSwitch.send(code, codeLength);
+    }
     return 0;
 }
