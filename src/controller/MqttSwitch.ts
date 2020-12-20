@@ -18,7 +18,7 @@ export class MqttSwitch {
 
    async register(registrationTopic: string): Promise<void> {
       const registrationInfo = {
-         clientId: this.mqttClient.options.clientId,
+         clientId: this.mqttClient.options.clientId && "",
          topic: this.topic
       }
       await this.mqttClient.publish(
