@@ -15,18 +15,6 @@ export class MqttSwitch {
       private topic: string,
       private oneSwitch: ISwitch) {}
 
-
-   async register(registrationTopic: string): Promise<void> {
-      const registrationInfo = {
-         clientId: this.mqttClient.options?.clientId && "",
-         topic: this.topic
-      }
-      await this.mqttClient.publish(
-         registrationTopic,
-         Buffer.from(JSON.stringify(registrationInfo)),
-         { qos: 1, retain: true });
-   }
-
    async startListen(): Promise<void> {
       this.mqttClient.subscribe(this.topic);
       this.mqttClient.on('message', async (topic: string, message: Buffer) => {
