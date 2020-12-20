@@ -4,6 +4,7 @@
   "description": "Switch your power sockets over MQTT.",
   "main": "index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "build-cpp": "g++ -DRPI switch/rc-switch/RCSwitch.cpp switch/send-code.cpp -o switch/send-code -lwiringPi",
     "build": "rimraf ./build && tsc",
     "start": "npm run build && node build/index.js"
