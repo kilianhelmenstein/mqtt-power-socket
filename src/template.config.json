@@ -1,4 +1,5 @@
 {
    "mqttServer": "",
-   "mqttClientId": "mqtt-power-socket"
+   "mqttClientId": "mqtt-power-socket",
+   "registrationTopic": "registration/"
 }

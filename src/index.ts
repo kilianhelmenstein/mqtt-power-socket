@@ -17,6 +17,7 @@ async function run() {
       for (const switchConfig of switchConfigs) {
          const rcSwitch = new RcSwitch(switchConfig.switchGroup, switchConfig.switchUnit);
          const mqttSwitch = new MqttSwitch(mqttClient, switchConfig.topic, rcSwitch);
+         mqttSwitch.register(config.registrationTopic);
          mqttSwitch.startListen();
       }
    } catch (e) {
