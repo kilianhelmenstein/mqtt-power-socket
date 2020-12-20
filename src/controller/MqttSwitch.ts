@@ -24,7 +24,7 @@ export class MqttSwitch {
       await this.mqttClient.publish(
          registrationTopic,
          Buffer.from(JSON.stringify(registrationInfo)),
-         { retain: true });
+         { qos: 1, retain: true });
    }
 
    async startListen(): Promise<void> {
