@@ -1,12 +1,19 @@
-import { AsyncMqttClient } from  "async-mqtt"
+import { AsyncMqttClient } from 'async-mqtt'
+import { type } from 'os';
 import { ISwitch } from '../domain/ISwitch'
 
 interface SwitchCommand {
    status: 'on' | 'off';
 }
 
-class Restration {
-   constructor(public clientId: string, public topic: string) {}
+type DeviceType = 'onoff' | 'unspecified';
+
+class RegistrationInfo {
+   constructor(
+      public clientId: string,
+      public topic: string,
+      public type: DeviceType
+      ) {}
 }
 
 export class MqttSwitch {
@@ -15,20 +22,8 @@ export class MqttSwitch {
       private topic: string,
       private oneSwitch: ISwitch) {}
 
-
-   async register(registrationTopic: string): Promise<void> {
-      const registrationInfo = {
-         clientId: this.mqttClient.options?.clientId && "",
-         topic: this.topic
-      }
-      await this.mqttClient.publish(
-         registrationTopic,
-         Buffer.from(JSON.stringify(registrationInfo)),
-         { qos: 1, retain: true });
-   }
-
-   async startListen(): Promise<void> {
-      this.mqttClient.subscribe(this.topic);
+   async startListen() {
+      await this.mqttClient.subscribe(this.topic);
       this.mqttClient.on('message', async (topic: string, message: Buffer) => {
          const isNotMyTopic = topic !== this.topic;
          if (isNotMyTopic)
@@ -37,11 +32,20 @@ export class MqttSwitch {
          console.log(`Received on ${topic}: ${message}`);
          
          const command = JSON.parse(message.toString()) as SwitchCommand;
-         await this.turnOnOrOff(command);
+         await this.handleCommand(command);
       });
    }
 
-   private async turnOnOrOff(command: SwitchCommand) {
+   async register() {
+      const registrationTopic = `registration/${this.topic}`
+      const registrationInfo = new RegistrationInfo('power-sockets', this.topic, 'onoff');
+      await this.mqttClient.publish(
+         registrationTopic,
+         Buffer.from(JSON.stringify(registrationInfo)),
+         { qos: 1, retain: true });
+   }
+
+   private async handleCommand(command: SwitchCommand) {
       const shallTurnOn = command.status === 'on';
       if (shallTurnOn)
          await this.oneSwitch.turnOn();

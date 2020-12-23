@@ -5,7 +5,7 @@ import { ISwitchConfiguration } from './ISwitchConfiguration'
 import { MqttSwitch } from './controller/MqttSwitch'
 import { RcSwitch } from './hardwareAccess/RcSwitch'
 
-import MQTT from "async-mqtt"
+import MQTT from 'async-mqtt'
 
 async function run() {
    try {
@@ -17,8 +17,8 @@ async function run() {
       for (const switchConfig of switchConfigs) {
          const rcSwitch = new RcSwitch(switchConfig.switchGroup, switchConfig.switchUnit);
          const mqttSwitch = new MqttSwitch(mqttClient, switchConfig.topic, rcSwitch);
-         mqttSwitch.register(config.registrationTopic);
-         mqttSwitch.startListen();
+         await mqttSwitch.startListen();
+         await mqttSwitch.register();
       }
    } catch (e) {
       console.log(`Connection error for ${config.mqttServer}: ${e}`);
