@@ -1,0 +1,14 @@
+[Unit]
+Description=mqtt-power-socket
+After=network.target
+
+[Service]
+ExecStart=npm run build-cpp && npm run start
+WorkingDirectory=/home/pi/workspace/mqtt-power-socket
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
