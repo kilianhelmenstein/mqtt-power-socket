@@ -16,7 +16,7 @@ async function run() {
       const switchConfigs = switchesConfig.switches as ISwitchConfiguration[];
       for (const switchConfig of switchConfigs) {
          const rcSwitch = new RcSwitch(switchConfig.switchGroup, switchConfig.switchUnit);
-         const mqttSwitch = new MqttSwitch(mqttClient, switchConfig.topic, rcSwitch);
+         const mqttSwitch = new MqttSwitch(mqttClient, switchConfig.name, switchConfig.topic, rcSwitch);
          await mqttSwitch.startListen();
          await mqttSwitch.register();
       }

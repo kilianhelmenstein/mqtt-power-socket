@@ -1,6 +1,7 @@
 {
    "switches": [
       {
+         "name": "Some Name",
          "topic": "/some/topic",
          "switchGroup": "00001",
          "switchUnit": "00001"
